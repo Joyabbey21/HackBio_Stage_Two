@@ -1,11 +1,9 @@
-# HackBio_Stage_Two
-HackBio_Stage_Two
-**  
-Name: Joy Abiodun  
-Team: Glycine  
-Stage: Two  
-Clear Evidence-Driven Answers  
-**
+**Name: Joy Abiodun  
+  Team: Glycine  
+  Stage: Two**
+ 
+ 
+ **Clear Evidence-Driven Answers**
 
 **1\. _What cell types did you identify?_**
 
@@ -24,7 +22,7 @@ The following cell types were identified from the dataset (one per Leiden cluste
 
 - Dendritic cells  
 
-- Plasma cells  
+- Plasma cells
 
 ### **2. _Explain the biological role of each cell type_**
 
@@ -32,7 +30,7 @@ The following cell types were identified from the dataset (one per Leiden cluste
 
 ### **  
 
-1\. B cells (memory B cells)**
+**1\. B cells (memory B cells)**
 
 Long-lived B lymphocytes that "remember" past infections. They rapidly produce antibodies upon re-exposure to an antigen, enabling fast and strong secondary immune responses.
 
@@ -113,19 +111,16 @@ BUT…
 ### **Deviates from PBMC because**
 
 PBMCs do **not** contain:  
-✔ **HSPCs  
-**✔ **Plasma cells**
+**HSPCs** 
+**Plasma cells**
 
 _"…presence of HSPCs tips the scale back toward marrow…"_
 
 Thus the frequency distribution is:
 
-- PBMC-type mononuclear cells → **present  
-    **
-- Bone-marrow-specific populations (HSPCs, plasma cells) → **present  
-    **
-- Whole-marrow lineages (neutrophil/erythroid) → **absent  
-    **
+- PBMC-type mononuclear cells → **present**
+- Bone-marrow-specific populations (HSPCs, plasma cells) → **present**
+- Whole-marrow lineages (neutrophil/erythroid) → **absent**
 
 This pattern supports: **bone marrow mononuclear fraction**.
 
@@ -142,3 +137,9 @@ _"HSPC label assigned… Progenitors… normally found only in bone marrow."_
 - Progenitors are rare in PBMCs  
 
 - Their presence strongly indicates **bone marrow origin**
+
+**4\. Based on the relative abundance of cell types, is the patient healthy or infected?**
+
+The cellular composition is most consistent with a non-acutely infected, steady-state immune environment rather than an active infection. First, there is no detectable neutrophil or neutrophil-precursor population (ELANE⁺, MPO⁺, or S100A8/A9⁺ clusters), which would normally expand during acute bacterial infection or systemic inflammation. The absence of granulocytic cells strongly argues against an acute inflammatory response. Second, monocytes are present but not disproportionately expanded, and there is no evidence of an inflammatory monocyte signature (e.g., IL1B, S100A8/A9), which would be expected in infection-driven emergency myelopoiesis. Third, the NK cell cluster does not show elevated cytotoxic markers (such as PRF1, GZMB, GNLY, or NKG7) that typically indicate viral infection or heightened innate activation. Finally, lymphocyte frequencies appear balanced: T cells and memory B cells are present at expected proportions without signs of lymphopenia or reactive lymphoid expansion. Plasma cells are detectable but not abnormally increased, consistent with baseline antibody maintenance rather than a recent immune surge.
+
+Taken together, no neutrophil expansion, no monocyte activation, no NK hyperactivation, and no lymphocyte collapse, the dataset shows no cellular signature of acute infection. The most scientifically supported conclusion is that the patient is likely healthy or in a non-inflamed physiological state, consistent with typical bone-marrow mononuclear cell composition.
