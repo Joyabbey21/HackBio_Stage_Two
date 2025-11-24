@@ -76,52 +76,136 @@ The patient shows **no transcriptional evidence of acute infection**, consistent
 
 ---
 
-## ▶️ **How to Run the Notebook**
+Got it — you want the **README “How to Run” section** to follow **exactly the same procedure shown in your actual code**
+(meaning: using **Google Colab**, installing packages with `!pip install`, downloading data with `!wget`, and running the sequential cells).
 
-### **1. Install dependencies**
-
-(Your notebook uses Scanpy, decoupler, and standard scientific libraries.)
-
-```bash
-pip install scanpy decoupler pandas numpy matplotlib seaborn
-```
-
-```bash
-pip install anndata umap-learn scikit-learn
-```
-
-### **2. Run the notebook**
-
-If using Jupyter:
-
-```bash
-jupyter notebook
-```
-
-If the script is `.py`, just run:
-
-```bash
-python stage2_code.py
-```
+Below is a perfect, polished README section **tailored to your exact workflow**, based entirely on the code you uploaded.
+You can copy and paste this directly into your README.
 
 ---
 
-## **Outputs**
+# ✅ **How to Run the Analysis (Exactly the Same Way as in the Code)**
 
-The analysis generates:
+### *Google Colab Workflow — Fully Reproducible*
 
-* **UMAP plots** for:
-
-  * Leiden clusters
-  * Cell-type annotations
-  * Stem/progenitor cell distribution
-  * Individual signature heatmaps
-* **Cluster annotations** saved inside the AnnData object
-* **Interpretation notes** for biological context
+This entire project was run on **Google Colab**, and the analysis can be reproduced by following the exact steps below.
 
 ---
 
-## Final Notes
+## ▶️ **1. Open the project in Google Colab**
 
-This analysis provides a high-confidence classification of both the tissue source and immune status. The workflow is fully reproducible and can be extended with differential expression, trajectory inference, or additional signature scoring.
+Go to:
 
+[https://colab.research.google.com](https://colab.research.google.com)
+
+Create a **New Notebook**, or upload the `.ipynb` version of this script.
+
+---
+
+## ▶️ **2. Install all required packages (same as used in the script)**
+
+Run the following cell *exactly as shown in the notebook*:
+
+```python
+!pip install scanpy
+!pip install anndata
+!pip3 install igraph
+!pip install celltypist
+!pip install decoupler
+!pip install fa2-modified
+!pip install crc32c
+```
+
+These commands install all libraries used in the workflow:
+`scanpy`, `anndata`, `igraph`, `celltypist`, `decoupler`, and additional dependencies.
+
+---
+
+## ▶️ **3. Download the dataset (exact method used in the code)**
+
+Run the same download command:
+
+```python
+!wget https://github.com/josoga2/sc/raw/refs/heads/main/bone_marrow.h5ad
+```
+
+This ensures the dataset is identical to the one used in the analysis.
+
+---
+
+## ▶️ **4. Load the dataset**
+
+Then run:
+
+```python
+import scanpy as sc
+import anndata as ad
+bone_marrow_df = sc.read('bone_marrow.h5ad')
+```
+
+This loads the bone marrow AnnData object into memory.
+
+---
+
+## ▶️ **5. Run the notebook cells sequentially**
+
+From this point onward, simply execute each cell **in order**, as the pipeline is structured linearly:
+
+### ✔ Quality control (QC)
+
+– Filtering mitochondrial genes
+– Filtering ribosomal & HB genes
+– QC metrics
+– Cell filtering
+– Gene filtering
+– Doublet detection
+
+### ✔ Normalization & transformation
+
+– Save counts layer
+– Normalize
+– Log transform
+
+### ✔ Feature selection
+
+– Highly variable genes
+
+### ✔ Dimensionality reduction
+
+– PCA
+– Neighborhood graph
+– UMAP
+
+### ✔ Clustering
+
+– Multiple Leiden resolutions
+– Visualize cluster structure
+
+### ✔ Annotation
+
+– Download biomart gene mappings
+– Fetch PanglaoDB markers
+– Run ULM scoring with decoupler
+– Rank markers by cluster
+– Map clusters to biological cell types
+
+### ✔ Visualization
+
+– UMAP plots (raw, cluster, annotated)
+– Violin plots
+– Gene-set score visualization
+
+Each block of code in `stage2_code.py` matches a step in this workflow.
+Running all cells sequentially reproduces the full analysis.
+
+---
+
+## ▶️ **6. Accessing Outputs**
+
+Plots are displayed directly in the Colab output cells, including:
+
+* QC violin plots
+* PCA loadings
+* UMAP embeddings (colored by clusters, cell types, and scores)
+* Decoupler score visualizations
+* Violin plots of marker scores
