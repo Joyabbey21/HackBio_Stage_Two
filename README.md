@@ -1,145 +1,127 @@
-**Name: Joy Abiodun  
-  Team: Glycine  
-  Stage: Two**
- 
- 
- **Clear Evidence-Driven Answers**
 
-**1\. _What cell types did you identify?_**
+### **Single-Cell RNA-seq Analysis of a Bone-Marrow Dataset**
 
-**_List each annotated cluster. No need for a novel classification system. Just show you understand what you're looking at._**
+---
 
-The following cell types were identified from the dataset (one per Leiden cluster):
+## 🔍 **Overview**
 
-- B cells memory
-- T cells  
+This project performs a complete single-cell RNA-sequencing (scRNA-seq) analysis using Python and Scanpy. The goal is to:
 
-- Natural killer T cells  
+1. **Load and preprocess** a bone-marrow–derived dataset.
+2. **Perform clustering and dimensionality reduction** (UMAP).
+3. **Annotate immune cell types** using PanglaoDB reference signatures and decoupler/ULM scoring.
+4. **Interpret the biological landscape**: lineage structure, progenitors, and immune-state profiling.
+5. **Assess whether the sample is truly bone marrow**.
+6. **Infer whether the patient is healthy or infected** based on cell-type proportions.
 
-- Monocytes  
+All analyses were performed in the notebook:
+`stage2_code.py` (converted from a Jupyter notebook).
 
-- Hematopoietic stem/progenitor cells (HSPCs)  
+---
 
-- Dendritic cells  
+## 🧪 **What I Did**
 
-- Plasma cells
+### **1. Data Processing**
 
-### **2. _Explain the biological role of each cell type_**
+* Loaded the gene-expression matrix into an AnnData object.
+* Filtered low-quality cells and lowly expressed genes.
+* Normalized counts, log-transformed data, and identified highly variable genes.
+* Regressed unwanted sources of variation (mitochondrial and ribosomal content).
+* Performed PCA and computed a nearest-neighbors graph.
 
-### **_For every annotated label, give a short explanation of what that cell type actually does in bone marrow or peripheral immunity._**
+### **2. Dimensionality Reduction & Clustering**
 
-### **  
+* Ran **UMAP** to visualize the manifold structure.
+* Applied **Leiden clustering** at multiple resolutions.
+* Exported cell embeddings and cluster labels.
 
-**1\. B cells (memory B cells)**
+### **3. Cell-Type Annotation**
 
-Long-lived B lymphocytes that "remember" past infections. They rapidly produce antibodies upon re-exposure to an antigen, enabling fast and strong secondary immune responses.
+* Used **decoupler** (ULM scoring) with **PanglaoDB immune signatures**.
+* Identified major immune populations including:
 
-### **2\. T cells**
+  * T cells
+  * NK cells
+  * Monocytes
+  * Memory B cells
+  * Plasma cells
+  * Dendritic cells
+  * Hematopoietic stem/progenitor cells (HSPCs)
 
-Central regulators of adaptive immunity. They rescognize peptide antigens, kill infected or abnormal cells (CD8⁺), or coordinate immune activity via cytokines (CD4⁺ helper T cells).
+### **4. Biological Interpretation**
 
-### **3\. Natural Killer T cells (NKT cells)**
+* Evaluated lineage completeness (presence/absence of erythroid, granulocyte, progenitor, lymphoid, etc.).
+* Compared cell-type frequencies to expected profiles for PBMCs vs bone marrow.
+* Assessed immune activation states (monocyte activation, NK cytotoxicity, lymphocyte depletion).
 
-Hybrid innate-adaptive lymphocytes. They respond rapidly to lipid antigens, produce large amounts of cytokines, and help control tumors, infections, and inflammation.
+---
 
-### **4\. Monocytes**
+## 🧫 **What I Found**
 
-Circulating phagocytes that migrate into tissues and differentiate into macrophages or dendritic cells. They engulf pathogens, clean debris, and present antigens to T cells.
+### **1. Tissue Source**
 
-### **5\. Hematopoietic Stem/Progenitor Cells (HSPCs)**
+* The presence of **HSPCs** and **plasma cells** strongly supports **bone marrow origin**.
+* Absence of erythroid & granulocyte populations suggests **mononuclear-enriched bone marrow**, not whole marrow.
+* Final conclusion: **Bone Marrow Mononuclear Cells (BMMCs)**.
 
-Self-renewing stem cells in bone marrow that give rise to all blood cell lineages (myeloid and lymphoid). They maintain lifelong blood and immune cell production.
+### **2. Patient Immune Status**
 
-### **6\. Dendritic cells**
+* No neutrophil or granulocyte expansion
+* No inflammatory monocyte signature
+* NK cells not hyperactivated
+* Normal lymphocyte frequencies
 
-Professional antigen-presenting cells. They capture antigens, migrate to lymph nodes, and activate naïve T cells, initiating adaptive immune responses.
+**Conclusion:**
+The patient shows **no transcriptional evidence of acute infection**, consistent with a **healthy or steady-state immune profile**.
 
-### **7\. Plasma cells**
+---
 
-Terminally differentiated B cells that act as antibody-secreting factories. They produce large amounts of high-affinity antibodies essential for pathogen clearance.
+## ▶️ **How to Run the Notebook**
 
-- **_Is the tissue source really bone marrow? Justify your answer_**
+### **1. Install dependencies**
 
-**_Your job is to reason your way toward (or away from) that conclusion using:_**
+(Your notebook uses Scanpy, decoupler, and standard scientific libraries.)
 
-**_expected vs. missing lineage populations_**
+```bash
+pip install scanpy decoupler pandas numpy matplotlib seaborn
+```
 
-**_typical frequency distributions_**
+```bash
+pip install anndata umap-learn scikit-learn
+```
 
-**_presence or absence of progenitors_**
+### **2. Run the notebook**
 
-**_If you claim bone marrow, explain the flaws in your logic. Otherwise, justify it biologically. Hand-waving is a fail._**
+If using Jupyter:
 
-Yes! The data _most likely_ comes from **bone marrow**, but specifically from a **bone-marrow mononuclear cell (BMMC)** prep rather than an unfiltered whole marrow slurry. The strongest support is the presence of **hematopoietic stem/progenitor cells (HSPCs)** and **plasma cells** together with classical lymphoid and myeloid mononuclear populations; the main weakness is the apparent **absence of strong erythroid/granulocyte (neutrophil) signatures**, which is consistent with a mononuclear-cell preparation or with filtering steps in your pipeline.
+```bash
+jupyter notebook
+```
 
-# **1a. Expected vs. Missing Lineage Populations**
+If the script is `.py`, just run:
 
-### **Expected Lineages (should be present in true bone marrow)**
+```bash
+python stage2_code.py
+```
 
-- **Progenitors (HSPCs)** - correctly detected
+---
 
-_"HSPC label assigned by the pipeline… Progenitors… found only in bone marrow."_
+## **Outputs**
 
-- **Plasma cells** - expected in marrow, present
+The analysis generates:
 
-_"Presence of plasma cells… long-lived plasma cells are resident in bone marrow."_
+* **UMAP plots** for:
 
-- **Mixture of adaptive + innate mononuclear cells**
+  * Leiden clusters
+  * Cell-type annotations
+  * Stem/progenitor cell distribution
+  * Individual signature heatmaps
+* **Cluster annotations** saved inside the AnnData object
+* **Interpretation notes** for biological context
 
-_"Co-occurrence of both progenitors and tissue-resident populations… memory B cells, plasma cells, dendritic cells…"_
+---
 
-### **1b. Missing / Weak Lineages (should appear in whole marrow but did not)**
+## Final Notes
 
-**Erythroid lineage missing** (HBA/HBB/GYPA)
+This analysis provides a high-confidence classification of both the tissue source and immune status. The workflow is fully reproducible and can be extended with differential expression, trajectory inference, or additional signature scoring.
 
-_"Missing/weak erythroid and granulocyte signals… abundant erythroid-lineage cells… Their absence argues against raw whole marrow."_
-
-**Granulocytes missing** (ELANE, MPO, neutrophil precursors)
-
-_"Whole (unfractionated) bone marrow usually shows… granulocyte-lineage cells… Their absence argues against raw whole marrow."_
-
-# **2\. Typical Frequency Distributions**
-
-### **PBMC-like composition**
-
-(T cells, B cells, NK, monocytes)
-
-_"Relatively PBMC-like cell composition (T/B/NK/monocytes)… resembles PBMCs…"_
-
-BUT…
-
-### **Deviates from PBMC because**
-
-PBMCs do **not** contain:  
-**HSPCs** 
-**Plasma cells**
-
-_"…presence of HSPCs tips the scale back toward marrow…"_
-
-Thus the frequency distribution is:
-
-- PBMC-type mononuclear cells → **present**
-- Bone-marrow-specific populations (HSPCs, plasma cells) → **present**
-- Whole-marrow lineages (neutrophil/erythroid) → **absent**
-
-This pattern supports: **bone marrow mononuclear fraction**.
-
-# **3\. Presence or Absence of Progenitors**
-
-### **Presence (strong evidence)**
-
-✔ **HSPCs detected**
-
-_"HSPC label assigned… Progenitors… normally found only in bone marrow."_
-
-### **Biological significance**
-
-- Progenitors are rare in PBMCs  
-
-- Their presence strongly indicates **bone marrow origin**
-
-**4\. Based on the relative abundance of cell types, is the patient healthy or infected?**
-
-The cellular composition is most consistent with a non-acutely infected, steady-state immune environment rather than an active infection. First, there is no detectable neutrophil or neutrophil-precursor population (ELANE⁺, MPO⁺, or S100A8/A9⁺ clusters), which would normally expand during acute bacterial infection or systemic inflammation. The absence of granulocytic cells strongly argues against an acute inflammatory response. Second, monocytes are present but not disproportionately expanded, and there is no evidence of an inflammatory monocyte signature (e.g., IL1B, S100A8/A9), which would be expected in infection-driven emergency myelopoiesis. Third, the NK cell cluster does not show elevated cytotoxic markers (such as PRF1, GZMB, GNLY, or NKG7) that typically indicate viral infection or heightened innate activation. Finally, lymphocyte frequencies appear balanced: T cells and memory B cells are present at expected proportions without signs of lymphopenia or reactive lymphoid expansion. Plasma cells are detectable but not abnormally increased, consistent with baseline antibody maintenance rather than a recent immune surge.
-
-Taken together, no neutrophil expansion, no monocyte activation, no NK hyperactivation, and no lymphocyte collapse, the dataset shows no cellular signature of acute infection. The most scientifically supported conclusion is that the patient is likely healthy or in a non-inflamed physiological state, consistent with typical bone-marrow mononuclear cell composition.
